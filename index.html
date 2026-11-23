@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VÉSPER — Personal Development System</title>
+  
+  <!-- Fontes do Google: Cinzel para a marca e Inter para UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="vesper-app">
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="vesper-sidebar" id="vesperSidebar">
+      <div class="sidebar-header">
+        <div class="brand-container">
+          <div class="brand-badge">V</div>
+          <div>
+            <div class="brand-title">VÉSPER</div>
+            <div class="brand-subtitle">Personal Development System</div>
+          </div>
+        </div>
+        <div class="brand-motto">"Potencial. Capacidade. Realização."</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-view="dashboard">
+          <span class="nav-icon" id="icon-nav-dashboard"></span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="areas">
+          <span class="nav-icon" id="icon-nav-areas"></span>
+          <span>Áreas de Desenvolvimento</span>
+          <span class="nav-badge">8</span>
+        </a>
+        <a class="nav-item" data-view="goals">
+          <span class="nav-icon" id="icon-nav-goals"></span>
+          <span>Metas e Objetivos</span>
+          <span class="nav-badge" id="badge-goals-count">0</span>
+        </a>
+        <a class="nav-item" data-view="diary">
+          <span class="nav-icon" id="icon-nav-diary"></span>
+          <span>Diário de Evolução</span>
+          <span class="nav-badge" id="badge-diary-count">0</span>
+        </a>
+        <a class="nav-item" data-view="experiences">
+          <span class="nav-icon" id="icon-nav-experiences"></span>
+          <span>Experiências e Desafios</span>
+          <span class="nav-badge" id="badge-exp-count">0</span>
+        </a>
+        <a class="nav-item" data-view="stats">
+          <span class="nav-icon" id="icon-nav-stats"></span>
+          <span>Estatísticas e Indicadores</span>
+        </a>
+        <a class="nav-item" data-view="reviews">
+          <span class="nav-icon" id="icon-nav-reviews"></span>
+          <span>Revisões Periódicas</span>
+        </a>
+        <a class="nav-item" data-view="library">
+          <span class="nav-icon" id="icon-nav-library"></span>
+          <span>Biblioteca Pessoal</span>
+        </a>
+        <a class="nav-item" data-view="horizon">
+          <span class="nav-icon" id="icon-nav-horizon"></span>
+          <span>Horizonte 25</span>
+        </a>
+        <a class="nav-item" data-view="settings">
+          <span class="nav-icon" id="icon-nav-settings"></span>
+          <span>Configurações & Backup</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="quick-record-btn" id="btnOpenQuickRecord">
+          <span id="icon-quick-plus"></span>
+          <span>Registro Rápido</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="vesper-main">
+      <!-- CABEÇALHO SUPERIOR -->
+      <header class="vesper-topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle-btn" id="btnToggleMobileMenu" aria-label="Abrir menu">
+            <span id="icon-menu-toggle"></span>
+          </button>
+          <div class="topbar-date-display">
+            <span id="icon-topbar-calendar"></span>
+            <span id="currentDateDisplay">Hoje</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="user-status-pill">
+            <div class="user-status-dot"></div>
+            <span class="user-status-name" id="userHeaderName">Jéssica</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTEÚDO DINÂMICO DAS VIEWS -->
+      <div class="vesper-content">
+        
+        <!-- 1. DASHBOARD PRINCIPAL -->
+        <section class="view-section active" id="view-dashboard">
+          <div class="philosophy-banner">
+            <div>
+              <div class="greeting-text" id="dashboardGreeting">Boa noite, Jéssica</div>
+              <div class="philosophy-quote">
+                "Transformar potencial em capacidade e capacidade em realização."
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-outline-gold" id="btnDashboardNewGoal">
+                <span id="icon-dash-plus-goal"></span>
+                <span>Nova Meta</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cards de Resumo Geral -->
+          <div class="grid-4" style="margin-bottom: 24px;">
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Metas Ativas</span>
+                <span class="badge badge-gold" id="dash-active-goals-pill">0</span>
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: #fff;" id="dash-active-goals-num">0</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Em acompanhamento contínuo</div>
+            </div>
+
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Concluídas</span>
+                <span class="badge badge-success" id="dash-completed-pill">0%</span>
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--status-success);" id="dash-completed-num">0</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Objetivos alcançados</div>
+            </div>
+
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Reflexões no Diário</span>
+                <span class="badge badge-neutral" id="dash-diary-count-pill">0</span>
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: #fff;" id="dash-diary-num">0</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Registros de aprendizado</div>
+            </div>
+
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Experiências</span>
+                <span class="badge badge-gold" id="dash-exp-pill">0</span>
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent-gold-light);" id="dash-exp-num">0</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Desafios vivenciados</div>
+            </div>
+          </div>
+
+          <!-- Seção de Visão Geral com Gráfico Teia e Metas Prioritárias -->
+          <div class="grid-dashboard-main">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <!-- Metas Prioritárias -->
+              <div class="vesper-card">
+                <div class="card-header">
+                  <span class="card-title">Objetivos Prioritários da Semana</span>
+                  <button class="btn btn-secondary" style="font-size: 0.76rem; padding: 4px 10px;" id="btnViewAllGoals">Ver todas</button>
+                </div>
+                <div id="dashPriorityGoalsList">
+                  <!-- Injetado dinamicamente via JS -->
+                </div>
+              </div>
+
+              <!-- Atividades e Registros Recentes -->
+              <div class="vesper-card">
+                <div class="card-header">
+                  <span class="card-title">Atividades & Registros Recentes</span>
+                  <button class="btn btn-secondary" style="font-size: 0.76rem; padding: 4px 10px;" id="btnViewAllDiary">Ver diário</button>
+                </div>
+                <div id="dashRecentActivityList">
+                  <!-- Injetado dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Coluna Lateral do Dashboard -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <!-- Radar das 8 Áreas -->
+              <div class="vesper-card">
+                <div class="card-header">
+                  <span class="card-title">Equilíbrio das 8 Áreas</span>
+                </div>
+                <div id="radarDashboardChart" style="min-height: 280px; display: flex; align-items: center; justify-content: center;"></div>
+                <div style="font-size: 0.76rem; color: var(--text-muted); text-align: center; margin-top: 8px;">
+                  Distribuição de esforço e consistência nos últimos 30 dias.
+                </div>
+              </div>
+
+              <!-- Próximos Compromissos & Revisão -->
+              <div class="vesper-card">
+                <div class="card-header">
+                  <span class="card-title">Ciclo de Revisões</span>
+                </div>
+                <div id="dashReviewReminderBox">
+                  <!-- Injetado dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. ÁREAS DE DESENVOLVIMENTO -->
+        <section class="view-section" id="view-areas">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Áreas de Desenvolvimento</h1>
+              <p class="section-desc">
+                Estrutura de 8 dimensões fundamentais para o desenvolvimento humano integral, sem fragmentação e com foco no crescimento sustentável.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-4" id="areasCardsGrid">
+            <!-- 8 cards das áreas injetados dinamicamente -->
+          </div>
+
+          <!-- Detalhe da Área Selecionada (Sub-visão) -->
+          <div id="areaDetailView" style="display: none; margin-top: 32px;">
+            <!-- Conteúdo da área selecionada -->
+          </div>
+        </section>
+
+        <!-- 3. METAS E OBJETIVOS -->
+        <section class="view-section" id="view-goals">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Metas e Objetivos</h1>
+              <p class="section-desc">
+                Gestão intencional de metas diárias, semanais, mensais, anuais e de longo prazo. Objetivos como ferramentas de direção, não de rigidez.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-primary" id="btnAddNewGoal">
+                <span id="icon-add-goal-btn"></span>
+                <span>Novo Objetivo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Metas -->
+          <div class="filters-bar">
+            <div class="search-input-box">
+              <span id="icon-search-goals"></span>
+              <input type="text" id="inputSearchGoals" placeholder="Pesquisar objetivos por nome ou palavra-chave...">
+            </div>
+
+            <div class="filter-pills" id="goalHorizonFilters">
+              <button class="filter-pill active" data-horizon="all">Todos os Horizontes</button>
+              <button class="filter-pill" data-horizon="diario">Diário</button>
+              <button class="filter-pill" data-horizon="semanal">Semanal</button>
+              <button class="filter-pill" data-horizon="mensal">Mensal</button>
+              <button class="filter-pill" data-horizon="anual">Anual</button>
+              <button class="filter-pill" data-horizon="longo_prazo">Longo Prazo</button>
+            </div>
+
+            <div class="filter-pills" id="goalStatusFilters">
+              <button class="filter-pill active" data-status="all">Todos os Status</button>
+              <button class="filter-pill" data-status="em_andamento">Em Andamento</button>
+              <button class="filter-pill" data-status="concluido">Concluídos</button>
+              <button class="filter-pill" data-status="pausado">Pausados</button>
+            </div>
+          </div>
+
+          <!-- Lista de Metas -->
+          <div id="goalsContainerList">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </section>
+
+        <!-- 4. DIÁRIO DE DESENVOLVIMENTO -->
+        <section class="view-section" id="view-diary">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Diário de Desenvolvimento</h1>
+              <p class="section-desc">
+                Registro metódico de acontecimentos, aprendizados, dificuldades enfrentadas e reflexões sinceras. A história documentada da sua transformação.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-primary" id="btnAddNewDiaryEntry">
+                <span id="icon-add-diary-btn"></span>
+                <span>Novo Registro no Diário</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros do Diário -->
+          <div class="filters-bar">
+            <div class="search-input-box">
+              <span id="icon-search-diary"></span>
+              <input type="text" id="inputSearchDiary" placeholder="Buscar reflexão, aprendizado ou palavra...">
+            </div>
+
+            <div class="filter-pills" id="diaryAreaFilters">
+              <button class="filter-pill active" data-area="all">Todas as Áreas</button>
+              <!-- Pílulas das áreas inseridas via JS -->
+            </div>
+          </div>
+
+          <!-- Linha do Tempo Cronológica -->
+          <div class="timeline-container" id="diaryTimelineList">
+            <!-- Entradas do diário injetadas via JS -->
+          </div>
+        </section>
+
+        <!-- 5. EXPERIÊNCIAS E DESAFIOS -->
+        <section class="view-section" id="view-experiences">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Experiências e Desafios</h1>
+              <p class="section-desc">
+                Atividades intencionais para expandir horizontes, vencer timidez, praticar coragem e consolidar novas capacidades no mundo real.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-primary" id="btnAddNewExperience">
+                <span id="icon-add-exp-btn"></span>
+                <span>Registrar Experiência</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Catálogo de Sugestões de Desafios -->
+          <div class="vesper-card" style="margin-bottom: 24px; background: linear-gradient(135deg, #16161d 0%, #121217 100%);">
+            <div class="card-header">
+              <span class="card-title">
+                <span id="icon-exp-sparkles"></span>
+                Desafios Recomendados para Expansão
+              </span>
+            </div>
+            <div class="grid-3" id="quickChallengeSuggestions">
+              <!-- Sugestões injetadas via JS -->
+            </div>
+          </div>
+
+          <!-- Lista de Experiências Realizadas -->
+          <div class="card-header" style="margin-bottom: 16px;">
+            <span class="card-title" style="font-size: 1.1rem;">Histórico de Experiências Registradas</span>
+            <span class="badge badge-gold" id="totalExpCountBadge">0 experiências</span>
+          </div>
+
+          <div id="experiencesListContainer">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </section>
+
+        <!-- 6. ESTATÍSTICAS E INDICADORES -->
+        <section class="view-section" id="view-stats">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Indicadores e Estatísticas</h1>
+              <p class="section-desc">
+                Métricas e tendências para orientar decisões com clareza racional — sem pontuações artificiais de valor pessoal ou cobrança estéril.
+              </p>
+            </div>
+          </div>
+
+          <!-- Gráficos Principais -->
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Frequência Mensal de Registros</span>
+              </div>
+              <div id="statsLineChartContainer" style="min-height: 200px;"></div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px;">
+                Evolução do volume de reflexões e atividades documentadas ao longo do semestre.
+              </div>
+            </div>
+
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Distribuição de Status das Metas</span>
+              </div>
+              <div id="statsDonutChartContainer" style="min-height: 200px;"></div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px;">
+                Proporção de objetivos concluídos, em andamento, pausados ou planejados.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Metas Ativas por Área de Vida</span>
+              </div>
+              <div id="statsBarChartContainer" style="min-height: 220px;"></div>
+            </div>
+
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Resumo de Indicadores Gerais</span>
+              </div>
+              <div id="statsSummaryMetrics" style="display: flex; flex-direction: column; gap: 14px;">
+                <!-- Métricas injetadas via JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. REVISÕES PERIÓDICAS -->
+        <section class="view-section" id="view-reviews">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Revisão Semanal e Mensal</h1>
+              <p class="section-desc">
+                Pausa intencional para calibrar a bússola, avaliar dificuldades com sobriedade e definir prioridades conscientes.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-outline-gold" id="btnNewWeeklyReview">
+                <span id="icon-add-rev-w"></span>
+                <span>Nova Revisão Semanal</span>
+              </button>
+              <button class="btn btn-primary" id="btnNewMonthlyReview">
+                <span id="icon-add-rev-m"></span>
+                <span>Nova Revisão Mensal</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Abas de Navegação Semanal / Mensal -->
+          <div class="filter-pills" style="margin-bottom: 24px;">
+            <button class="filter-pill active" id="tabReviewsWeekly">Revisões Semanais</button>
+            <button class="filter-pill" id="tabReviewsMonthly">Revisões Mensais</button>
+          </div>
+
+          <div id="reviewsListContainer">
+            <!-- Listagem das revisões injetada via JS -->
+          </div>
+        </section>
+
+        <!-- 8. BIBLIOTECA PESSOAL -->
+        <section class="view-section" id="view-library">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Biblioteca Pessoal</h1>
+              <p class="section-desc">
+                Repositório de referências culturais, livros lidos, cursos concluídos, citações marcantes e sementes de futuros projetos.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-primary" id="btnAddNewLibraryItem">
+                <span id="icon-add-lib-btn"></span>
+                <span>Adicionar à Biblioteca</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros da Biblioteca -->
+          <div class="filters-bar">
+            <div class="search-input-box">
+              <span id="icon-search-lib"></span>
+              <input type="text" id="inputSearchLibrary" placeholder="Buscar título, autor ou anotação...">
+            </div>
+
+            <div class="filter-pills" id="libraryTypeFilters">
+              <button class="filter-pill active" data-type="all">Todos os Itens</button>
+              <button class="filter-pill" data-type="livro">Livros</button>
+              <button class="filter-pill" data-type="curso">Cursos</button>
+              <button class="filter-pill" data-type="frase">Frases & Reflexões</button>
+              <button class="filter-pill" data-type="projeto">Projetos</button>
+            </div>
+          </div>
+
+          <!-- Grid da Biblioteca -->
+          <div class="grid-3" id="libraryCardsGrid">
+            <!-- Itens injetados via JS -->
+          </div>
+        </section>
+
+        <!-- 9. HORIZONTE 25 -->
+        <section class="view-section" id="view-horizon">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Horizonte 25</h1>
+              <p class="section-desc">
+                A visão clara e integrada da mulher que você está construindo para os seus 25 anos. O norte aspiracional que guia as escolhas do presente.
+              </p>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-outline-gold" id="btnEditHorizon">
+                <span id="icon-edit-horizon"></span>
+                <span>Editar Visão</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="horizon-manifesto-card">
+            <div class="horizon-title-big">Manifesto dos 25 Anos</div>
+            <div class="horizon-text" id="horizonManifestoText">
+              "Transformar potencial em capacidade e capacidade em realização."
+            </div>
+          </div>
+
+          <!-- Carta para o meu eu aos 25 anos -->
+          <div class="letter-to-self-card">
+            <div class="card-header">
+              <span class="card-title">
+                <span id="icon-horizon-mail"></span>
+                Carta para o Meu Eu aos 25 Anos
+              </span>
+            </div>
+            <div class="letter-content" id="horizonLetterText">
+              <!-- Carta carregada via JS -->
+            </div>
+          </div>
+
+          <!-- Marcos por Área aos 25 Anos -->
+          <div class="card-header" style="margin-bottom: 16px;">
+            <span class="card-title" style="font-size: 1.15rem;">Visão Estruturada nas 8 Dimensões</span>
+          </div>
+          <div class="grid-2" id="horizonMilestonesGrid">
+            <!-- Marcos das 8 áreas carregados via JS -->
+          </div>
+        </section>
+
+        <!-- 10. CONFIGURAÇÕES & BACKUP -->
+        <section class="view-section" id="view-settings">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Configurações & Privacidade</h1>
+              <p class="section-desc">
+                Controle integral dos seus dados pessoais. O Vésper funciona de forma privada e offline no seu navegador via LocalStorage.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <!-- Perfil do Usuário -->
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Identidade do Usuário</span>
+              </div>
+              <form id="formUserProfile">
+                <div class="form-group">
+                  <label class="form-label">Nome de Exibição</label>
+                  <input type="text" class="form-input" id="settingUserName" value="Jéssica">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Descrição / Ocupação Principal</label>
+                  <input type="text" class="form-input" id="settingUserRole" value="Estudante de ADS & Aspirante a Concursos">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Idade Alvo do Horizonte</label>
+                  <input type="number" class="form-input" id="settingHorizonAge" value="25">
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+              </form>
+            </div>
+
+            <!-- Privacidade & Arquitetura -->
+            <div class="vesper-card">
+              <div class="card-header">
+                <span class="card-title">Privacidade e Armazenamento Local</span>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                Os dados inseridos no Vésper residem <strong>exclusivamente na memória local deste navegador</strong> (LocalStorage). Não há envio oculto para servidores remotos de terceiros.
+              </p>
+              <div style="background-color: var(--bg-surface); padding: 14px; border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-muted); border-left: 2px solid var(--accent-gold);">
+                <strong>Nota Importante de Segurança:</strong> O armazenamento local não substitui um backup periódico. Para garantir que nunca perderá seus registros ao limpar o cache do navegador, realize downloads regulares do backup JSON.
+              </div>
+            </div>
+          </div>
+
+          <!-- Gerenciamento de Backups e Dados -->
+          <div class="vesper-card">
+            <div class="card-header">
+              <span class="card-title">Exportação, Importação e Manutenção</span>
+            </div>
+            <div class="grid-3" style="margin-top: 14px;">
+              <div style="background-color: var(--bg-surface); padding: 16px; border-radius: var(--radius-md);">
+                <div style="font-weight: 600; margin-bottom: 6px;">Backup Completo (JSON)</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+                  Gera um arquivo de segurança contendo todas as metas, registros de diário, biblioteca, avaliações e configurações.
+                </p>
+                <button class="btn btn-outline-gold" id="btnExportJSON" style="width: 100%;">
+                  <span id="icon-btn-download-json"></span>
+                  <span>Baixar Backup JSON</span>
+                </button>
+              </div>
+
+              <div style="background-color: var(--bg-surface); padding: 16px; border-radius: var(--radius-md);">
+                <div style="font-weight: 600; margin-bottom: 6px;">Restaurar Backup (JSON)</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+                  Substitui ou restaura a base de dados do sistema a partir de um arquivo JSON previamente salvo.
+                </p>
+                <input type="file" id="inputImportJSON" accept=".json" style="display: none;">
+                <button class="btn btn-secondary" id="btnTriggerImportJSON" style="width: 100%;">
+                  <span id="icon-btn-upload-json"></span>
+                  <span>Carregar Arquivo JSON</span>
+                </button>
+              </div>
+
+              <div style="background-color: var(--bg-surface); padding: 16px; border-radius: var(--radius-md);">
+                <div style="font-weight: 600; margin-bottom: 6px;">Relatórios em Planilha (CSV)</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+                  Exporte suas metas ou diário em formato tabular compatível com Excel e Google Planilhas.
+                </p>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary" id="btnExportGoalsCSV" style="flex: 1; font-size: 0.78rem;">Metas CSV</button>
+                  <button class="btn btn-secondary" id="btnExportDiaryCSV" style="flex: 1; font-size: 0.78rem;">Diário CSV</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dados demonstrativos e Limpeza -->
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="font-weight: 600; font-size: 0.9rem;">Gerenciar Dados Padrão</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                  Você pode recarregar o conjunto de demonstração inicial ou resetar para um sistema em branco.
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-secondary" id="btnReloadDemoData">Restaurar Dados Demo</button>
+                <button class="btn btn-danger" id="btnClearAllData">Limpar Todos os Dados</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL UNIFICADO PARA FORMULÁRIOS -->
+  <div class="vesper-modal-backdrop" id="genericModalBackdrop">
+    <div class="vesper-modal" id="genericModal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="genericModalTitle">Título do Formulário</h3>
+        <button class="btn-icon" id="btnCloseGenericModal">
+          <span id="icon-modal-close"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="genericModalBody">
+        <!-- Conteúdo do formulário inserido via JS -->
+      </div>
+      <div class="modal-footer" id="genericModalFooter">
+        <button class="btn btn-secondary" id="btnCancelGenericModal">Cancelar</button>
+        <button class="btn btn-primary" id="btnSubmitGenericModal">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+  <div class="vesper-modal-backdrop" id="confirmModalBackdrop">
+    <div class="vesper-modal" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="confirmModalTitle">Confirmar Ação</h3>
+        <button class="btn-icon" id="btnCloseConfirmModal">
+          <span id="icon-confirm-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmModalMessage" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+          Tem certeza que deseja excluir este registro? Esta ação é irreversível.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelConfirmModal">Cancelar</button>
+        <button class="btn btn-danger" id="btnAcceptConfirmModal">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER DE NOTIFICAÇÕES TOAST -->
+  <div class="vesper-toast-container" id="vesperToastContainer"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/icons.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
