@@ -3,7 +3,7 @@
  * Camada de dados com LocalStorage, exportação/importação JSON, exportação CSV e integridade de dados.
  */
 
-const STORAGE_KEY = 'vesper_system_data_v1';
+const STORAGE_KEY = 'vesper_system_data_v2';
 
 const AREAS_DEFINITION = {
   intelectual: {
@@ -58,7 +58,7 @@ const AREAS_DEFINITION = {
 
 const DEFAULT_DEMO_DATA = {
   profile: {
-    name: 'Jéssica',
+    name: 'Gabriel Santos',
     subtitle: 'Estudante de ADS & Aspirante a Concursos',
     horizonAge: 25,
     joinedDate: '2026-01-15'
@@ -420,8 +420,8 @@ const DEFAULT_DEMO_DATA = {
   horizon25: {
     targetAge: 25,
     title: 'Horizonte 25 — A Visão Estruturada da Minha Trajetória',
-    manifesto: 'Aos 25 anos, serei uma mulher técnica e espiritualmente madura, com autonomia financeira consolidada, mente serena e corpo vigoroso. Não busco validação alheia nem o ruído das multidões; busco ser excelente naquilo que me foi confiado, honrando a Deus e transformando meu potencial em capacidade sólida e minha capacidade em realizações que façam a diferença.',
-    letterToSelf: 'Querida Jéssica aos 25 anos,\n\nSe você está lendo isso, lembre-se das noites silenciosas em que estudou algoritmos com paciência, dos dias em que venceu o cansaço para treinar e da serenidade que buscou quando tudo parecia incerto.\n\nVocê construiu sua vida tijolo por tijolo. Não se esqueça de manter a humildade dos que sabem o quanto ainda têm a aprender e a coragem dos que nunca se acovardam diante de um desafio digno. Cuide das pessoas que você ama e nunca negocie seus valores éticos por um atalho fácil.\n\nVocê é o resultado do compromisso diário com a verdade e com a sua evolução.',
+    manifesto: 'Aos 25 anos, serei um homem técnico e espiritualmente maduro, com autonomia financeira consolidada, mente serena e corpo vigoroso. Não busco validação alheia nem o ruído das multidões; busco ser excelente naquilo que me foi confiado, honrando a Deus e transformando meu potencial em capacidade sólida e minha capacidade em realizações que façam a diferença.',
+    letterToSelf: 'Querido Gabriel aos 25 anos,\n\nSe você está lendo isso, lembre-se das noites silenciosas em que estudou algoritmos com paciência, dos dias em que venceu o cansaço para treinar e da serenidade que buscou quando tudo parecia incerto.\n\nVocê construiu sua vida tijolo por tijolo. Não se esqueça de manter a humildade dos que sabem o quanto ainda têm a aprender e a coragem dos que nunca se acovardam diante de um desafio digno. Cuide das pessoas que você ama e nunca negocie seus valores éticos por um atalho fácil.\n\nVocê é o resultado do compromisso diário com a verdade e com a sua evolução.',
     milestones: [
       {
         area: 'profissional',
@@ -466,7 +466,7 @@ const DEFAULT_DEMO_DATA = {
     ]
   },
   settings: {
-    userName: 'Jéssica',
+    userName: 'Gabriel Santos',
     userRole: 'Estudante de ADS & Aspirante a Concursos',
     autoSave: true,
     compactView: false,
@@ -484,6 +484,12 @@ class VesperStorage {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
+        if (parsed.profile && (parsed.profile.name === 'Jéssica' || !parsed.profile.name)) {
+          parsed.profile.name = 'Gabriel Santos';
+        }
+        if (parsed.settings && (parsed.settings.userName === 'Jéssica' || !parsed.settings.userName)) {
+          parsed.settings.userName = 'Gabriel Santos';
+        }
         // Garante que todas as chaves essenciais existam
         return {
           ...DEFAULT_DEMO_DATA,

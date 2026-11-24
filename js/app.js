@@ -180,7 +180,7 @@ class VesperApp {
     else if (hour >= 12 && hour < 18) greeting = 'Boa tarde';
     else greeting = 'Boa noite';
 
-    const userName = this.storage.data.profile.name || 'Jéssica';
+    const userName = this.storage.data.profile.name || 'Gabriel Santos';
     const userRole = this.storage.data.profile.subtitle || 'Personal Development';
 
     const greetingEl = document.getElementById('dashboardGreeting');
